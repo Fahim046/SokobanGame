@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+    <head>
+	  <meta charset="UTF-8">
+	  <title>SokoBan Game</title>
+	  
+     <script src="settings.js"></script>  
+	 <link rel= "stylesheet" href ="style.css">
+	   
+	</head>
+	<body>
+	
+        <div> 
+		 <div id ="myDev"> 
+		 </div>
+		
+		</div>
+		
+		<script>
+		
+		
+		  
+		  
+		  //================================================================================================================================================================
+           
+				var xMax = 19;
+				var yMax = 16;
+				var myArrayNum = 0;
+				var player = 0;
+				var playerPosY = 0;
+				var palyerPosX = 0;
+				
+              
+				//
+				//     BUILD THE 320 <div> </div> LINES TO MAKE THE BOARD
+				//
+				
+				for (var y = 0; y < yMax; y++)
+				{
+					var rowDiv = document.createElement('div');
+					rowDiv.id = 'row'+'y'+y;
+					rowDiv.className = 'myrow';
+
+					for (var x = 0; x < xMax; x++)
+					{
+																	// Create the inner div before appending to the body
+						var boxDiv = document.createElement('div');
+						boxDiv.id = 'y'+y+'x'+x;
+						boxDiv.className = 'box';
+						
+
+                          if(mapsArray[myArrayNum].mapGrid[y][x]=='W')
+                           {
+                              boxDiv.classList.add("W");
+                           }
+						    else if(mapsArray[myArrayNum].mapGrid[y][x]=='B')
+                           {
+                              boxDiv.classList.add("B");
+                           }
+						    else if(mapsArray[myArrayNum].mapGrid[y][x]=='G')
+                           {
+                              boxDiv.classList.add("G");
+                           }
+						   
+						   else if(mapsArray[myArrayNum].mapGrid[y][x]=='P')
+                           {
+                              boxDiv.classList.add("P");
+							  player = boxDiv;
+							  playerPosY=y;
+							  playerPosX =x;
+                           }
+						   
+						   
+											
+						rowDiv.appendChild(boxDiv);
+					}
+					// Then append the rowDiv with all it's boxDiv's onto the body
+					document.getElementById("myDev").appendChild(rowDiv);
+				}
+				
+				
+				
+				
+				//
+				//	<div id="row-y1" class="myrow">
+				//		<div id="x1-y1" class="box myGreen"></div>
+				//		<div id="x2-y1" class="box myGreen"></div>
+				//		<div id="x3-y1" class="box myGreen"></div>
+				//
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+		  document.addEventListener("keydown" , Move)
+		  function Move(event){
+		  console.log(event);
+		   event.preventDefault();
+		   
+		     if(event.key == "ArrowLeft"){
+			 
+			    MoveLeft();
+			 }
+			 else if(event.key == "ArrowRight"){
+			 
+			    MoveRight();
+			 }
+			else  if(event.key == "ArrowUp"){
+			 
+			    MoveUp(); 
+			 }
+		  
+		    else if(event.key == "ArrowDown"){
+			 
+			    MoveDown();
+			 }
+		  
+		  }
+		  
+		  function MoveUp(){
+		  		 
+		  player = document.getElementById("y" + playerPosY + "x" + playerPosX);
+		  next = document.getElementById("y" + (playerPosY-1) + "x" + playerPosX);
+		  nextNext =document.getElementById("y" + (playerPosY-2)+ "x" + playerPosX);
+		  
+		 
+		  if(next.classList.contains('W'))
+		  { 
+		     //*****************//
+		  }
+		  
+		   else if(next.classList.contains('B'))
+		  { 
+			if(nextNext.classList.contains('B') || nextNext.classList.contains('W'))
+			{
+		    // ****************
+			}
+			else 
+			{
+				player.classList.remove('P');  
+				next.classList.add('P');
+				playerPosY--;
+				// 2 lines below this to move the box
+				next.classList.remove('B');
+				nextNext.classList.add('B');
+				
+				
+			}
+		  }
+		  else
+		  {
+		     player.classList.remove('P');  
+			 next.classList.add('P');
+			 playerPosY--;
+			 
+		  }
+		  }
+		  
+		  function MoveRight(){
+		  		 
+		  player = document.getElementById("y" + playerPosY + "x" + playerPosX);
+		  next = document.getElementById("y" + playerPosY + "x" + (playerPosX+1));
+		  nextNext =document.getElementById("y" + playerPosY+ "x" + (playerPosX+2));
+		  
+		  
+		  
+		  if(next.classList.contains('W')){ /*   */}
+		  else if(next.classList.contains('B'))
+		  {
+		    if(nextNext.classList.contains('B') || nextNext.classList.contains('W'))
+			{
+		    // ****************
+			}
+			else
+			{
+			   player.classList.remove('P');
+			   next.classList.add('P');
+			   playerPosX++;
+			   
+			   next.classList.remove('B');
+			   nextNext.classList.add('B');
+			   
+		    }
+			
+		  }
+		  else
+		  {
+		     player.classList.remove('P');  
+			 next.classList.add('P');
+			 playerPosX++;
+			 
+		  }  
+		  }
+		  
+		  
+		  function MoveLeft(){
+		  		 
+		  player = document.getElementById("y" + playerPosY + "x" + playerPosX);
+		  next = document.getElementById("y" + playerPosY + "x" + (playerPosX-1));
+		  nextNext =document.getElementById("y" + playerPosY + "x" + (playerPosX-2));
+		   if(next.classList.contains('W')){ /*   */}
+		  
+		   else if(next.classList.contains('B'))
+		  {
+		    if(nextNext.classList.contains('B') || nextNext.classList.contains('W'))
+			{
+		    // ****************
+			}
+			else
+			 {
+			   player.classList.remove('P');
+			   next.classList.add('P');
+			   playerPosX--;
+			   
+			   next.classList.remove('B');
+			   nextNext.classList.add('B');
+			   
+		     }
+		  }
+		  else
+		  {
+		     player.classList.remove('P');  
+			 next.classList.add('P');
+			 playerPosX--;
+			 
+		  }  
+			
+		  }
+		  
+		  
+		  function MoveDown(){
+		  		 
+		  player = document.getElementById("y" + playerPosY + "x" + playerPosX);
+		  next = document.getElementById("y" + (playerPosY+1) + "x" + playerPosX);
+		  nextNext =document.getElementById("y" + (playerPosY+2)+ "x" + playerPosX);
+		  
+		 
+		  if(next.classList.contains('W'))
+		  { 
+		     //*****************//
+		  }
+		  
+		   else if(next.classList.contains('B'))
+		  { 
+			if(nextNext.classList.contains('B') || nextNext.classList.contains('W'))
+			{
+		    // ****************
+			}
+			else 
+			{
+				player.classList.remove('P');  
+				next.classList.add('P');
+				playerPosY++;
+				// 2 lines below this to move the box
+				next.classList.remove('B');
+				nextNext.classList.add('B');
+				
+				
+			}
+		  }
+		  else
+		  {
+		     player.classList.remove('P');  
+			 next.classList.add('P');
+			 playerPosY++;
+			 
+		  }
+		  
+		  }
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  /*var Player_Pos = {i:11, j:11};
+		
+		function Build_Board(){
+		
+		  for(var i =0; i<tileMap.height; i++){
+		  
+      		  document.body.appendChild(document.createElement("br"));
+			for(var j=0; j<tileMap.width; j++)
+			{
+				//console.log(tileMap.mapGrid[r][c][0]);
+				if(tileMap.mapGrid[i][j]== " ")
+				{
+				
+				      var x = document.createElement("IMG");
+                          x.setAttribute("src", "i0.gif");
+                          x.setAttribute("width", "30");
+                          x.setAttribute("height", "22");
+                         // x.setAttribute("alt", "The Pulpit Rock");
+                          document.body.appendChild(x);
+								
+				}
+				else if(tileMap.mapGrid[i][j]=='W')
+				{
+				
+				      var x = document.createElement("IMG");
+                          x.setAttribute("src", "i2.gif");
+                          x.setAttribute("width", "30");
+                          x.setAttribute("height", "30");
+                         // x.setAttribute("alt", "The Pulpit Rock");
+                          document.body.appendChild(x);		
+				
+				}
+				else 
+				    
+					if(tileMap.mapGrid[i][j]=='B')
+					{
+					 var x  document.createElement("IMG");
+                          x.setAttribute("src", "i3.gif");
+                          x.setAttribute("width", "30");
+                          x.setAttribute("height", "22");
+                         // x.setAttribute("alt", "The Pulpit Rock");
+                          document.body.appendChild(x);		
+					}
+					
+					else 
+				    
+					if(tileMap.mapGrid[i][j]=='G')
+					{
+					 var x = document.createElement("IMG");
+                          x.setAttribute("src", "i1.gif");
+                          x.setAttribute("width", "30");
+                          x.setAttribute("height", "30");
+                         // x.setAttribute("alt", "The Pulpit Rock");
+                          document.body.appendChild(x);		
+					}
+					else 
+				    
+					if(tileMap.mapGrid[i][j]=='P')
+					{
+					
+					 var x = document.createElement("IMG");
+                          x.setAttribute("src", "i5.gif");
+                          x.setAttribute("width", "30");
+                          x.setAttribute("height", "22");
+                         // x.setAttribute("alt", "The Pulpit Rock");
+                          document.body.appendChild(x);		
+					}
+			}
+		  
+		  }
+		  
+		  }*/
+		
+		
+		
+		
+		
+		
+		</script>	
+		
+		
+		
+
+    </body>
+    </html>

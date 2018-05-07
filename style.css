@@ -1,0 +1,50 @@
+.W{
+	
+	background-image: url("i2.gif");
+	
+}
+.P{
+	
+	background-image: url("i5.gif");
+		
+}
+.G{
+	
+	background-image: url("i1.gif");
+	
+}
+.B{
+	
+	background-image: url("i3.gif");
+	
+}
+
+.P.G {
+	
+	background-image: url("i5.gif");
+	
+}
+.B.G {
+	background-image: url("i4.gif");
+	
+	
+}
+
+#myDev {
+	
+	
+	width:684px;
+	height:576;
+	float:left;
+	
+	
+}
+.box{
+width:36px;
+height:36px;
+float: left;
+}
+.myrow
+{
+	width: 684px;
+}
